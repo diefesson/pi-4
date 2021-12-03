@@ -1,9 +1,10 @@
 import {Request, Response} from "express";
-import Players from '../models/Players';
+import PlayersRepository from '../models/Players';
 
 class CreatePlayerController{
     async handle(request: Request, response:Response): Promise<Response>{
-        return response.status(201).json({message: "deu bom"});
+        const players = await PlayersRepository.findAll();
+        return response.status(201).json(players);
     }
 }
 

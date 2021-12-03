@@ -1,8 +1,7 @@
-import databaseConfig from '../config/database';
+import * as Sequelize from 'sequelize';
+import db from '../config/database';
 
-const Sequelize = require('sequelize');
-
-const connection = new Sequelize.Sequelize(databaseConfig);
+const connection = new Sequelize.Sequelize(db);
 
 export default connection;
 
