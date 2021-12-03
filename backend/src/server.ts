@@ -1,7 +1,7 @@
-import express from "express";
+import { app } from "./app";
 
-const app = express();
-app.use(express.json());
 
-app.listen(3333);
+app.listen(3000, () => {
+    console.log("Server is runner! \nWelcome the Game! ");
+});
 
