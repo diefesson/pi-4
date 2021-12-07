@@ -1,7 +1,13 @@
-import * as Sequelize from 'sequelize';
-import db from '../config/database';
 
-const connection = new Sequelize.Sequelize(db);
+import { Connection, createConnection, getConnectionOptions } from "typeorm"
 
-export default connection;
 
+export default async(): Promise<Connection> =>{
+    const defaultOptions = await getConnectionOptions();
+
+    return  await createConnection(
+        Object.assign(defaultOptions, {
+            database: defaultOptions.database
+        }),
+    );
+};
