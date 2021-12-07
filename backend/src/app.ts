@@ -4,6 +4,7 @@ import 'express-async-errors';
 import express from 'express';
 import {router}  from './routes';
 import createConnection from './database';
+import "./shared/container";
 
 createConnection();
 var app = express();
