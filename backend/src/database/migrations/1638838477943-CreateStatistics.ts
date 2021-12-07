@@ -24,7 +24,8 @@ export class CreateStatistics1638838477943 implements MigrationInterface {
                 },
                 {
                     name: "statusDescription",
-                    type: "varchar"                    
+                    type: "varchar",
+                    isNullable: true                    
                 },
                 {
                     name: "correctTotal",
@@ -36,12 +37,14 @@ export class CreateStatistics1638838477943 implements MigrationInterface {
                     default: "now()"
                 },
                 {
-                    name: "update_at",
-                    type: "timestamp"
+                    name: "updated_at",
+                    type: "timestamp",
+                    isNullable: true
                 },
                 {
                     name: "deleted_at",
-                    type: "timestamp"
+                    type: "timestamp",
+                    isNullable: true
                 }
             ]
         }));

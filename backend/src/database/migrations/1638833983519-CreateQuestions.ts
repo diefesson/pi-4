@@ -30,12 +30,14 @@ export class CreateQuestions1638833983519 implements MigrationInterface {
                         default: "now()"
                     },
                     {
-                        name: "update_at",
-                        type: "timestamp"
+                        name: "updated_at",
+                        type: "timestamp",
+                        isNullable: true
                     },
                     {
                         name: "deleted_at",
-                        type: "timestamp"
+                        type: "timestamp",
+                        isNullable: true
                     }
                 ],
                 foreignKeys: [
