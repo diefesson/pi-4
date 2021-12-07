@@ -5,8 +5,9 @@ Após clonar o repositorio, siga estas instruções:
 1. rode o comando `yarn` no terminal, para baixar todas as dependências necessárias para o backend do projeto;
 2. renomeie o arquivo `.env.example` para `.env`, e preencha os valores que houve (se houver);
 3. renomeie o arquivo `ormconfig.example.json` para `ormconfig.json`, e adicione as credenciais do postgres, atribua valores nos atributos username e password;
-4. rode o comando `yarn typeorm migration:run` para executar as migrations existentes, para a criação das tabelas no banco;
-5. rode o comando `yarn dev` para executar o projeto. O projeto será executado no seguinte endereço: http://localhost:3000;
+4. criei no o banco de dados 'show-do-milhao' no postgres;
+5. rode o comando `yarn typeorm migration:run` para executar as migrations existentes, para a criação das tabelas no banco;
+6. rode o comando `yarn dev` para executar o projeto. O projeto será executado no seguinte endereço: http://localhost:3000;
 
 ## Comandos uteis
 
@@ -16,6 +17,8 @@ Após clonar o repositorio, siga estas instruções:
   `yarn typeorm migration:create -n <nome da migration>`
 - Executar migration:
   `yarn typeorm migration:run`
+- Executar o projeto:
+  `yarn dev`
 
 ## Links úteis:
 
