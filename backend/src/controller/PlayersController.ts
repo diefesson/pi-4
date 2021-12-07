@@ -1,11 +1,30 @@
 import {Request, Response} from "express";
-import PlayersRepository from '../models/Players';
+import {container} from "tsyringe";
+import { PlayersUseCase } from "../useCase/PlayersUseCase";
 
-class CreatePlayerController{
-    async handle(request: Request, response:Response): Promise<Response>{
-        const players = await PlayersRepository.findAll();
-        return response.status(201).json(players);
+class PlayerController{
+    async create(request: Request, response:Response): Promise<Response>{
+        
+        const {
+            name,
+            nickname,
+            password,
+            avatar,
+            isAdmin,
+        } = request.body;
+
+        const playersUseCase = container.resolve(PlayersUseCase);
+
+        const result = await playersUseCase.create({
+            name,
+            nickname,
+            password,
+            avatar,
+            isAdmin,
+        });
+
+        return response.status(201).send();
     }
 }
 
-export {CreatePlayerController};
+export {PlayerController};

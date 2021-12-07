@@ -1,10 +1,10 @@
 import { Router } from "express";
-import { CreatePlayerController } from "../controller/PlayersController";
+import { PlayerController } from "../controller/PlayersController";
 
 var playersRoutes = Router();
 
-const createPlayerController = new CreatePlayerController();
+const playerController = new PlayerController();
 
-playersRoutes.post("/", createPlayerController.handle);
+playersRoutes.post("/",playerController.create);
 
 export {playersRoutes};
