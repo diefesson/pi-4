@@ -1,10 +1,10 @@
 <template>
   <div class="menu">
-    <button>Jogar</button>
-    <button>Estatisticas</button>
-    <button>Hall da fama</button>
-    <button>Minhas perguntas</button>
-    <button>Sair</button>
+    <router-link to="#"><button>Jogar</button></router-link>
+    <router-link to="#"><button>Estatisticas</button></router-link>
+    <router-link to="#"><button>Hall da fama</button></router-link>
+    <router-link to="#"><button>Minhas perguntas</button></router-link>
+    <router-link to="#"><button>Sair</button></router-link>
   </div>
 </template>
 
@@ -24,7 +24,7 @@
   border-width: 1px;
   border-radius: 10px;
   background-color: white;
-  font-family: 'roboto', sans-serif;
+  font-family: "roboto", sans-serif;
   font-size: 24px;
   padding: 10px;
 }
