@@ -1,30 +1,43 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <div class="page">
+    <div class="page-content">
+      <Top />
+      <router-view />
+    </div>
   </div>
-  <router-view/>
 </template>
 
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+@import '@/style/colors.scss';
+@import '@/style/fonts.scss';
+
+body {
+  margin: 0px;
 }
 
-#nav {
-  padding: 30px;
+.page {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+.page-content {
+  width: 100%;
+  max-width: 600px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: lightgray;
 }
 </style>
+
+<script>
+import Top from "@/components/Top.vue";
+
+export default {
+  components: {
+    Top,
+  },
+};
+</script>
