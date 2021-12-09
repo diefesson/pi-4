@@ -13,7 +13,7 @@ class Answers{
     isCorrect: boolean;
 
     @Column()
-    question_id: boolean;
+    question_id: number;
 
     @ManyToOne(()=> Questions)
     @JoinColumn({name: "question_id"})
@@ -29,3 +29,6 @@ class Answers{
     deleted_at: Date;
 
 }
+
+
+export {Answers};
