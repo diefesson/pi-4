@@ -14,6 +14,9 @@ class Questions {
     @ManyToMany(()=> Players)
     @JoinColumn({name: "player_id"})
     player: Players;
+
+    @Column()
+    player_id: number;
     
     @Column()
     created_at: Date;   
