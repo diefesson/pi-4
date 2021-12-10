@@ -1,5 +1,6 @@
 import { getRepository, Repository } from "typeorm";
 import { IQuestionsDTO } from "../dtos/IQuestionsDTO";
+import { Answers } from "../entities/Answers";
 import { Questions } from "../entities/Questions";
 
 
@@ -11,10 +12,14 @@ class QuestionsRepository{
         this.repository = getRepository(Questions);
     }
 
-    async create({utterance, player_id,}:IQuestionsDTO): Promise<Questions>{
+    async create({id, utterance, player_id, created_at, updated_at, deleted_at}:IQuestionsDTO): Promise<Questions>{
         const question = this.repository.create({
+            id,
             utterance,
-            player_id
+            player_id,
+            created_at,
+            updated_at,
+            deleted_at            
         });
 
         await this.repository.save(question);
@@ -31,6 +36,26 @@ class QuestionsRepository{
 
     async findById(id: number):Promise<Questions>{
         return await this.repository.findOne(id);
+    }
+
+    async getAll():Promise<Questions[]>{
+        return await this.repository.find();
+            // .createQueryBuilder('questions')
+            // .select()
+            // .innerJoin('answers', 'answers.question_id = questions.id')            
+            // .getRawMany(); 
+
+            //.innerJoinAndSelect('answers.question_id', 'questions.id')
+    }
+
+    async delete(id: number):Promise<void>{
+
+        await this.repository
+            .createQueryBuilder()
+            .update(Questions)
+            .set({deleted_at : new Date})
+            .where("id=:id", {id})
+            .execute();
     }
 
 }
