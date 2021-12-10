@@ -1,5 +1,6 @@
 
-import { Column, Entity, JoinColumn, ManyToMany, PrimaryColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToMany, OneToMany, PrimaryColumn } from "typeorm";
+import { Answers } from "./Answers";
 import { Players } from "./Players";
 
 @Entity("questions")
@@ -14,6 +15,12 @@ class Questions {
     @ManyToMany(()=> Players)
     @JoinColumn({name: "player_id"})
     player: Players;
+
+    @OneToMany(type=> Answers , answer => answer.question_id)
+    answers: Answers[];
+
+    @Column()
+    player_id: number;
     
     @Column()
     created_at: Date;   

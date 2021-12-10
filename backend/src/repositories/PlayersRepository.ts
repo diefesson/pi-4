@@ -32,6 +32,10 @@ class PlayersRepository {
         
         return player;
     }
+
+    async getById(id: number): Promise<Players>{
+        return await this.repository.findOne(id);
+    }
 }
 
 
