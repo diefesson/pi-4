@@ -8,8 +8,8 @@
 </template>
 
 <style lang="scss">
-@import '@/style/colors.scss';
-@import '@/style/fonts.scss';
+@import "@/style/colors.scss";
+@import "@/style/fonts.scss";
 
 body {
   margin: 0px;
