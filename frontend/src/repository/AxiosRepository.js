@@ -2,7 +2,7 @@ import axios from "axios";
 
 const DEFAULT_CONFIG = {
     withCredentials: true
-}
+};
 
 function identity(data) {
     return data;
@@ -25,12 +25,16 @@ export default class AxiosRepository {
         return axios.put(this.url + "/" + id, this.to(data), this.config);
     }
 
-    async get(id) {
-        return axios.get(this.url + "/" + id, this.config).then(this.from)
+    async find(id) {
+        return axios.get(this.url + "/" + id, this.config).then((response) => this.from(response.data));
     }
 
-    async del(id) {
-        return axios.delete(this.url + "/" + id, this.config)
+    async findAll() {
+        return axios.get(this.url, this.config).then((response) => response.data.map(this.from));
+    }
+
+    async remove(id) {
+        return axios.delete(this.url + "/" + id, this.config);
     }
 
 }
