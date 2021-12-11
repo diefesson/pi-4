@@ -4,7 +4,7 @@ const DEFAULT_CONFIG = {
     withCredentials: true
 };
 
-function identity(data) {
+function identity<T>(data: T): T {
     return data;
 }
 
