@@ -1,10 +1,10 @@
 <template>
   <div class="menu">
-    <router-link to="#"><button>Jogar</button></router-link>
-    <router-link to="#"><button>Estatisticas</button></router-link>
-    <router-link to="#"><button>Hall da fama</button></router-link>
-    <router-link to="#"><button>Minhas perguntas</button></router-link>
-    <router-link to="#"><button>Sair</button></router-link>
+    <button>Jogar</button>
+    <button>Estatisticas</button>
+    <button>Hall da fama</button>
+    <button @click="$router.push('/questions')">Minhas perguntas</button>
+    <button>Sair</button>
   </div>
 </template>
 
