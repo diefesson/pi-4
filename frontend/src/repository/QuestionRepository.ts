@@ -1,7 +1,10 @@
+import Question from "@/entity/Question";
 import AxiosRepository from "./AxiosRepository";
 
-export default class QuestionRepository extends AxiosRepository {
-  constructor(baseUrl, endpointUrl = "/question") {
+class QuestionRepository extends AxiosRepository<Question> {
+  constructor(baseUrl: string, endpointUrl = "/question") {
     super(baseUrl + endpointUrl);
   }
 }
+
+export default QuestionRepository;

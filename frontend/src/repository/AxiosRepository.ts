@@ -1,42 +1,40 @@
 import axios from "axios";
+import CrudRepository from "./CrudRepository";
 
 const DEFAULT_CONFIG = {
   withCredentials: true,
 };
 
-function identity<T>(data: T): T {
-  return data;
-}
+class AxiosRepository<T> implements CrudRepository<T> {
+  url: string;
+  config: {};
 
-export default class AxiosRepository {
-  constructor(url, config = {}, from = identity, to = identity) {
+  constructor(url: string, config = {}) {
     this.url = url;
-    this.from = from;
-    this.to = to;
     this.config = { ...DEFAULT_CONFIG, ...config };
   }
 
-  async add(data) {
-    return axios.post(this.url, this.to(data), this.config);
+  async add(data: T): Promise<void> {
+    return axios.post(this.url, data, this.config);
   }
 
-  async update(id, data) {
-    return axios.put(this.url + "/" + id, this.to(data), this.config);
+  async update(id: number, data: T): Promise<void> {
+    return axios.put(this.url + "/" + id, data, this.config);
   }
 
-  async find(id) {
+  async find(id: number): Promise<T> {
     return axios
       .get(this.url + "/" + id, this.config)
-      .then((response) => this.from(response.data));
+      .then((response) => response.data);
   }
 
-  async findAll() {
-    return axios
-      .get(this.url, this.config)
-      .then((response) => response.data.map(this.from));
+  async findAll(): Promise<T[]> {
+    return axios.get(this.url, this.config).then((response) => response.data);
   }
 
-  async remove(id) {
+  async remove(id: number): Promise<void> {
     return axios.delete(this.url + "/" + id, this.config);
   }
 }
+
+export default AxiosRepository;
