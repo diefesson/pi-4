@@ -1,8 +1,4 @@
-import repository from "@/repository";
+import { questionRepository } from "@/repository";
 import QuestionService from "./QuestionService";
 
-const questionService = new QuestionService(repository.questionRepository);
-
-export default {
-  questionService,
-};
+export const questionService = new QuestionService(questionRepository);
