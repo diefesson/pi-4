@@ -1,15 +1,15 @@
 <template>
   <div class="page">
     <div class="page-content">
-      <Top />
+      <top/>
       <router-view />
     </div>
   </div>
 </template>
 
 <style lang="scss">
-@import '@/style/colors.scss';
-@import '@/style/fonts.scss';
+@import "@/style/colors.scss";
+@import "@/style/fonts.scss";
 
 body {
   margin: 0px;

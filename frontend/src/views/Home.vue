@@ -3,7 +3,7 @@
     <button>Jogar</button>
     <button>Estatisticas</button>
     <button>Hall da fama</button>
-    <button>Minhas perguntas</button>
+    <button @click="$router.push('/questions')">Minhas perguntas</button>
     <button>Sair</button>
   </div>
 </template>
@@ -24,7 +24,7 @@
   border-width: 1px;
   border-radius: 10px;
   background-color: white;
-  font-family: 'roboto', sans-serif;
+  font-family: "roboto", sans-serif;
   font-size: 24px;
   padding: 10px;
 }
