@@ -53,3 +53,10 @@ exports.delete = async (id) => {
     },
   });
 };
+
+exports.findById = async (id) =>{
+  return Player.findByPk(id)
+    .then((result)=>{
+      return result
+    });
+};

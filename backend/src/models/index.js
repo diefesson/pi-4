@@ -18,5 +18,8 @@ sequelize.sync({
 const db = {};
 
 db.players = require("./player-model")(sequelize, Sequelize);
+db.questions = require("./questions-model")(sequelize, Sequelize);
+db.answers = require("./answers-model")(sequelize, Sequelize);
+
 
 module.exports = db;
