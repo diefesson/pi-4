@@ -2,6 +2,7 @@ import { createRouter, createWebHistory, RouterOptions } from "vue-router";
 import Home from "@/views/Home.vue";
 import Questions from "@/views/Questions.vue";
 import Login from "@/views/Login.vue";
+import Register from "@/views/Register.vue";
 
 const routes = [
   {
@@ -18,6 +19,11 @@ const routes = [
     path: "/login",
     name: "Login",
     component: Login,
+  },
+  {
+    path: "/registrar",
+    name: "Register",
+    component: Register,
   },
   {
     path: "/:pathMatch(.*)*",
