@@ -21,7 +21,7 @@ exports.findAll = async () => {
     return await Questions.findAll(); 
 };
 
-exports.update = async (id, Questions) => {
+exports.update = async (question) => {
   return await Questions.update(
     {
         utterance: question.utterance,
@@ -29,7 +29,7 @@ exports.update = async (id, Questions) => {
     },
     {
       where: {
-        id: id,
+        id: question.id,
       },
       returning: true,
     }
@@ -54,7 +54,7 @@ exports.delete = async (id) => {
 exports.findById = async (id) =>{
   return await Questions.findByPk(id)
     .then(result => {
-      return result.dataValues;
+      return result === null? null : result.dataValues;
     });
 };
 

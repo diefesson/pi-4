@@ -17,7 +17,7 @@ exports.save = async (answers) => {
 };
 
 
-exports.update = async (id, Answers) => {
+exports.update = async (answers) => {
   return await Answers.update(
     {
         description: answers.description,
@@ -26,13 +26,13 @@ exports.update = async (id, Answers) => {
     },
     {
       where: {
-        id: id,
+        id: answers.id,
       },
       returning: true,
     }
   )
     .then((result) => {
-      console.log("Update answer: " + JSON.stringify(result));
+      console.log("Update answer: " + JSON.stringify(result));      
       return result[1][0]; // Only Postgres, 1 is number of affect records, 0 is first element
     })
     .catch((err) => {
@@ -51,7 +51,7 @@ exports.delete = async (id) => {
 exports.findById = async (id) =>{
   return await Answers.findByPk(id)
     .then((result) => {      
-      return result.dataValues;
+      return result === null? null : result.dataValues;
     });
 };
 

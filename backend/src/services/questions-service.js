@@ -1,60 +1,44 @@
 const questionsRepository = require("../repositories/questions-repository");
 const playerRepository = require("../repositories/player-repository");
 const answersRepository = require("../repositories/answers-repository");
+const  AppError = require("../shared/errors/appError");
 
 class QuestionsService {
   async add(question) {
+   
+      var err = await this.validationQuestion(question);
 
-    if(question.utterance === null || question.utterance === "" )
-        console.log("é necessário informar uma descrição da questão!");//throw 
+      if(err instanceof AppError)
+        return err;
 
-    var player = await playerRepository.findById(question.createdPlayerId);
-    
-    if(player === null )
-        console.log("Não existe player com o id informado!");
+      var questionSaved = await questionsRepository.save(question);
 
-    if(question.answers.length != 4)
-        console.log("O número de alternativas deve ser igual a quatro!");
+      questionSaved.answer = [];
 
-    var answerCorrect = question.answers.filter( (a) => a.isCorrect == true);
+      for(let answer of question.answers){
 
-    if(answerCorrect.length != 1)
-        console.log("Somente deve existir uma única alternativa correta!");
+          answer.questionId = questionSaved.id;
 
-    if(answerCorrect.length == 0)
-        console.log("Deve existir pelo menos uma única alternativa correta!");
+          let saved = await answersRepository.save(answer);
+          
+          questionSaved.answer.push(saved);
+      }   
 
-    var questionSaved = await questionsRepository.save(question);
-
-    console.log("Questão salva: ",questionSaved);
-    questionSaved.answer = [];
-
-    for(let answer of question.answers){
-        console.log("Salvando pergunta:", answer);
-
-        if(answer.description === null || answer.description === "" )
-            console.log("é necessário informar uma descrição para as alternativas");//throw 
-
-        answer.questionId = questionSaved.id;
-
-        let saved = await answersRepository.save(answer);
-        
-        questionSaved.answer.push(saved);
-    }   
-
-    return questionSaved;
+      return questionSaved;
+   
   }
 
   async getByPlayerId(playerId) {
+    
     var player = await playerRepository.findById(playerId);
     
     if(player === null )
-        console.log("Não existe player com o id informado!");
+        return new AppError("Não existe player com o id informado!");
 
     var result = await questionsRepository.findByPlayerId(playerId);
    
     if(result == null || result == undefined)
-        console.log("Não ha questão associada a este player");
+        return new AppError("Não ha questão associada a este player");
 
     var questions = [];
 
@@ -72,16 +56,16 @@ class QuestionsService {
 
   }
 
-  async getById(questionId) {
-    
-    var questions = await questionsRepository.findById(questionId);
+  async getById(id) {
+
+    var questions = await questionsRepository.findById(id);
 
     if(questions == null || questions == undefined)
-        console.log("Não ha questão cadastrada com esse ID");
+      return new AppError("Não ha questão cadastrada com esse ID");
         
     questions.answers = await answersRepository.findByQuestionId(questions.id);
 
-    return questions;
+    return  questions;
 
   }
 
@@ -89,18 +73,88 @@ class QuestionsService {
     var answer = await answersRepository.findById(answerId);
 
     if(answer == null || answer == undefined)
-        console.log("Não ha resposta com este id");
+        return new AppError("Não ha resposta com este id");
     
     return answer;
   }
 
-//   update(id, question) {
-//     return questionsRepository.update(id, question);
-//   }
+  async update(question) {
 
-//   delete(id) {
-//     return questionsRepository.delete(id);
-//   }
+    var err = await this.validationQuestion(question);
+
+    if(err instanceof AppError)
+      return err;
+
+    await questionsRepository.update(question);
+    
+    
+    for(let answer of question.answers){        
+        answer.questionId = question.id;
+
+        await answersRepository.update(answer);                
+    }   
+    
+    return question;   
+
+  }
+
+  async validationQuestion(question){
+
+    //validando campos de 'question'
+    if(question.utterance === null || question.utterance === "" )
+        return new AppError("é necessário informar uma descrição da questão!");
+
+    //validando campos de 'player'
+    var player = await playerRepository.findById(question.createdPlayerId);
+    
+    if(player === null || player == [] )
+        return new AppError("Não existe player com o id informado!");
+
+    //validando campos de 'answers'
+    if(question.answers.length != 4)
+        return new AppError("O número de alternativas deve ser igual a quatro!");
+
+    var answerCorrect = question.answers.filter( (a) => a.isCorrect == true);
+
+    if(answerCorrect.length != 1)
+        return new AppError("Somente deve existir uma única alternativa correta!");
+
+    if(answerCorrect.length == 0)
+        return new AppError("Deve existir pelo menos uma única alternativa correta!");
+
+    var answerVerification = question.answers.filter( (a) => a.description === null || a.description === "" );
+
+    if(answerVerification.length != 0)
+        return new AppError("É necessário informar uma descrição para as alternativas");
+
+    if(question.id != undefined ){
+        var questionSaved = await questionsRepository.findById(question.id);
+
+        if(questionSaved === null || questionSaved === undefined)
+            return new AppError("Não há questão cadastrada com o id informado");
+    }
+
+    return undefined;
+    
+  }
+
+  async delete(id) {
+
+    var question = await questionsRepository.findById(id);
+
+    if(question == null || question == undefined)
+      return new AppError("Não ha questão cadastrada com esse ID");
+
+    question.answers = await answersRepository.findByQuestionId(question.id);
+
+    for(let answer of question.answers){
+      answersRepository.delete(answer.id);
+    }
+
+    questionsRepository.delete(id);
+
+    return {"message": `Questão de id ${id} foi removido com sucesso!`};
+  }
 }
 
 module.exports = QuestionsService;
