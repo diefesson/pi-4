@@ -1,3 +1,5 @@
+const { QueryTypes } = require('sequelize');
+const { answers } = require("../models");
 const db = require("../models");
 const Questions = db.questions;
 
@@ -50,5 +52,20 @@ exports.delete = async (id) => {
 };
 
 exports.findById = async (id) =>{
-  return await Questions.findByPk(id);
+  return await Questions.findByPk(id)
+    .then(result => {
+      return result.dataValues;
+    });
+};
+
+exports.findByPlayerId = async (playerId) =>{
+  return await Questions.findAll({where : {createdPlayerId : playerId}})  
+    .then((result) => {
+      var questions = [];
+
+      for(let q of result)  
+        questions.push(q.dataValues);
+        
+      return questions;
+    }); 
 };

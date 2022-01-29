@@ -45,9 +45,54 @@ class QuestionsService {
     return questionSaved;
   }
 
-//   getAll() {
-//     return questionsRepository.findAll();
-//   }
+  async getByPlayerId(playerId) {
+    var player = await playerRepository.findById(playerId);
+    
+    if(player === null )
+        console.log("Não existe player com o id informado!");
+
+    var result = await questionsRepository.findByPlayerId(playerId);
+   
+    if(result == null || result == undefined)
+        console.log("Não ha questão associada a este player");
+
+    var questions = [];
+
+    for(var question of result){
+        question.answers = [];
+        
+        var answers = await answersRepository.findByQuestionId(question.id);
+        
+        question.answers.push(answers);
+
+        questions.push(question);
+    }
+
+    return questions;
+
+  }
+
+  async getById(questionId) {
+    
+    var questions = await questionsRepository.findById(questionId);
+
+    if(questions == null || questions == undefined)
+        console.log("Não ha questão cadastrada com esse ID");
+        
+    questions.answers = await answersRepository.findByQuestionId(questions.id);
+
+    return questions;
+
+  }
+
+  async isCorrect(id, answerId){
+    var answer = await answersRepository.findById(answerId);
+
+    if(answer == null || answer == undefined)
+        console.log("Não ha resposta com este id");
+    
+    return answer;
+  }
 
 //   update(id, question) {
 //     return questionsRepository.update(id, question);

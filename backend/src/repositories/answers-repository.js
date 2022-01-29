@@ -49,5 +49,21 @@ exports.delete = async (id) => {
 };
 
 exports.findById = async (id) =>{
-  return await Answers.findByPk(id);
+  return await Answers.findByPk(id)
+    .then((result) => {      
+      return result.dataValues;
+    });
+};
+
+
+exports.findByQuestionId = async (questionId) =>{
+  return await Answers.findAll({where : {questionId : questionId}})
+    .then((result) => {
+      var answers = [];
+
+      for(let a of result)  
+        answers.push(a.dataValues);
+        
+      return answers;
+    }); 
 };
