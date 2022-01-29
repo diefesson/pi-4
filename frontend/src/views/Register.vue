@@ -1,6 +1,6 @@
 <template>
   <header class="register">
-    <form @submit="test">
+    <form @submit="$router.push('/login')">
       <div class="inputsStyles">
         <div class="inputLabel">
           <p>Nickname:</p>

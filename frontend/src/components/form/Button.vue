@@ -1,6 +1,6 @@
 <template>
   <header>
-    <button class="buttonForm" type="submit">{{ label }}</button>
+    <button class="buttonForm" type="submit" >{{ label }}</button>
   </header>
 </template>
 

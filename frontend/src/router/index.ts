@@ -1,8 +1,10 @@
-import { createRouter, createWebHistory, RouterOptions } from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
 import Home from "@/views/Home.vue";
 import Questions from "@/views/Questions.vue";
 import Login from "@/views/Login.vue";
 import Register from "@/views/Register.vue";
+import Correta from "@/views/Correta.vue";
+import Incorreta from "@/views/Incorreta.vue";
 
 const routes = [
   {
@@ -24,6 +26,16 @@ const routes = [
     path: "/registrar",
     name: "Register",
     component: Register,
+  },
+  {
+    path: "/correto",
+    name: "Correta",
+    component: Correta,
+  },
+  {
+    path: "/incorreto",
+    name: "Incorreta",
+    component: Incorreta,
   },
   {
     path: "/:pathMatch(.*)*",

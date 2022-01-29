@@ -14,7 +14,7 @@
           <Button label="Entrar" />
         </div>
         <div>
-          <Button label="Cadastrar" />
+          <Button label="Cadastrar" @click="$router.push('/registrar')" />
         </div>
       </div>
     </div>
