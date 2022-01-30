@@ -11,10 +11,12 @@ app.use(express.urlencoded({ extended: true }));
 const index = require("./routes/index.js");
 const players = require("./routes/player-route.js");
 const questions = require("./routes/questions-route.js");
+const statistics = require("./routes/statistics-route.js");
 
 app.use("/", index);
 app.use("/players", players);
 app.use("/questions", questions);
+app.use("/statistics", statistics);
 
 app.use((req, res, next) => {
   res.status(404).send({

@@ -18,8 +18,11 @@ sequelize.sync({
 const db = {};
 
 db.players = require("./player-model")(sequelize, Sequelize);
+db.statistics = require("./statistics-model")(sequelize, Sequelize);
 db.questions = require("./questions-model")(sequelize, Sequelize);
 db.answers = require("./answers-model")(sequelize, Sequelize);
 
+db.players.hasMany(db.statistics);
+db.statistics.belongsTo(db.players);
 
 module.exports = db;

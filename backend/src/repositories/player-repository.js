@@ -51,7 +51,7 @@ exports.delete = async (id) => {
     where: {
       id: id,
     },
-  });
+  })
 };
 
 exports.findById = async (id) =>{
