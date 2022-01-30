@@ -7,7 +7,6 @@ exports.get = async (req, res) => {
 };
 
 exports.post = async (req, res) => {
-    console.log('Chegou aqui');
     let player = await playerService.add(
       new Player(req.body.username, req.body.password, req.body.email, req.body.isAdmin)
     );
@@ -23,7 +22,7 @@ exports.put = async (req, res) => {
   res.json(
     await playerService.update(
       req.params.id,
-      new Product(req.body.username, req.body.password, req.body.email, req.body.isAdmin)
+      new Player(req.body.username, req.body.password, req.body.email, req.body.isAdmin)
     )
   );
 };
