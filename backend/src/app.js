@@ -12,11 +12,13 @@ const index = require("./routes/index.js");
 const players = require("./routes/player-route.js");
 const questions = require("./routes/questions-route.js");
 const statistics = require("./routes/statistics-route.js");
+const analysis = require("./routes/analysis-route.js");
 
 app.use("/", index);
 app.use("/players", players);
 app.use("/questions", questions);
 app.use("/statistics", statistics);
+app.use("/analysis", analysis);
 
 app.use((req, res, next) => {
   res.status(404).send({
