@@ -12,12 +12,7 @@ exports.post = async (req, res) => {
     new Questions(createdPlayerId, utterance, answers)
   );
 
-  if(question instanceof AppError)
-    return res.status(question.statusCode).json({
-      message: question.message
-    });
-  else  
-    res.status(201).json(question); 
+  res = validation(res, question);
    
 };
 
@@ -26,12 +21,7 @@ exports.getByPlayerId = async (req, res) => {
 
   var questions = await questionsService.getByPlayerId(playerId);
 
-  if(questions instanceof AppError)
-    return res.status(questions.statusCode).json({
-      message: questions.message
-    });
-  else  
-    res.status(201).json(questions); 
+  res = validation(res, questions); 
 };
 
 exports.getById = async (req, res) => {
@@ -39,12 +29,7 @@ exports.getById = async (req, res) => {
 
   var questions = await questionsService.getById(id);
  
-  if(questions instanceof AppError)
-    return res.status(questions.statusCode).json({
-      message: questions.message
-    });
-  else  
-    res.status(201).json(questions);
+  res = validation(res, questions);
 
 };
 
@@ -53,12 +38,7 @@ exports.isCorrect = async (req, res) => {
 
   var questions = await questionsService.isCorrect(id, answerId);
 
-  if(questions instanceof AppError)
-    return res.status(questions.statusCode).json({
-      message: questions.message
-    });
-  else  
-    res.status(201).json(questions);
+  res = validation(res, questions);
 };
 
 exports.put = async (req, res) => {   
@@ -70,22 +50,24 @@ exports.put = async (req, res) => {
     new Questions(createdPlayerId, utterance, answers,id)
   );
 
-  if(question instanceof AppError)
-      res.status(question.statusCode).json({
-        message: question.message
-      });
-  else  
-    res.status(201).json(question);
+  res = validation(res, question);
   
 };
 
 exports.delete = async (req, res) => {
   var result = await questionsService.delete(req.params.id);
   
-  if(result instanceof AppError)
-      res.status(result.statusCode).json({
-        message: result.message
-      });
-  else  
-    res.status(201).json(result);
+  res = validation(res, result) ;
 };
+
+async function validation(res, question){
+  
+  if(question instanceof AppError)
+    res.status(question.statusCode).json({
+      message: question.message
+  });
+  else  
+    res.status(201).json(question); 
+
+  return res;
+}
