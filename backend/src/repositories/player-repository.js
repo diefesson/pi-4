@@ -57,6 +57,13 @@ exports.delete = async (id) => {
 exports.findById = async (id) =>{
   return Player.findByPk(id)
     .then((result)=>{
-      return result
+      return result === null? null : result.dataValues;
+    });
+};
+
+exports.findByUsername = async (username) => {
+  return Player.findOne({where : {username: username}})
+    .then((result)=>{
+      return result === null? null : result.dataValues;
     });
 };
