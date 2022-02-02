@@ -28,7 +28,11 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: lightgray;
+  background: #003263;
+  color: #fff;
+  button {
+    color: black;
+  };
 }
 </style>
 
