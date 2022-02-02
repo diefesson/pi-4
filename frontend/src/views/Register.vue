@@ -61,6 +61,7 @@
 .inputForm {
   all: unset;
   background: #fff;
+  color: #000;
   width: 400px;
   height: 21px;
   border-radius: 10px;
