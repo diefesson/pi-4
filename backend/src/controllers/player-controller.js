@@ -34,6 +34,14 @@ exports.delete = async (req, res) => {
   res = validation(res, player);  
 };
 
+exports.login = async (req, res) => {
+  let {username, password } = req.body;
+
+  let result = await playerService.login(username, password);
+
+  res = validation(res, result);  
+};
+
 async function validation(res, player){
   
   if(player instanceof AppError)
