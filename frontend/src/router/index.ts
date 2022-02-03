@@ -1,10 +1,11 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "@/views/Home.vue";
-import Questions from "@/views/Questions.vue";
 import Login from "@/views/Login.vue";
 import Register from "@/views/Register.vue";
 import Correta from "@/views/Correta.vue";
 import Incorreta from "@/views/Incorreta.vue";
+import ListQuestions from "@/views/ListQuestionsView.vue";
+import AddQuestion from "@/views/AddQuestionView.vue";
 
 const routes = [
   {
@@ -13,9 +14,14 @@ const routes = [
     component: Home,
   },
   {
-    path: "/questions",
-    name: "Questions",
-    component: Questions,
+    path: "/list-questions",
+    name: "List questions",
+    component: ListQuestions,
+  },
+  {
+    path: "/add-question",
+    name: "Add question",
+    component: AddQuestion,
   },
   {
     path: "/login",
