@@ -20,7 +20,7 @@ class PlayerService {
     if(player.isAdmin === null || player.isAdmin === undefined)
       player.isAdmin = false;
 
-    let hashPassword = await bcrypt.hash(player.password, process.env.CRYPTO_CODE);
+    let hashPassword = await bcrypt.hashSync(player.password, process.env.CRYPTO_CODE);
 
     player.password = hashPassword;
 
@@ -48,7 +48,7 @@ class PlayerService {
     if(result instanceof AppError)
       return result;
     
-    let hashPassword = await bcrypt.hash(player.password, process.env.CRYPTO_CODE);
+    let hashPassword = await bcrypt.hashSync(player.password, process.env.CRYPTO_CODE);
 
     player.password = hashPassword;
 
@@ -74,20 +74,16 @@ class PlayerService {
 
     if(player == null)
       return new AppError("Username ou Password estão invalidos!");
-    // testar bcrypt
-    let isMatch = await bcrypt.compare(password, player.password);
-    
-    if(!isMatch)
+ 
+    let passwordCrypto = await bcrypt.hashSync(password, process.env.CRYPTO_CODE); 
+ 
+    if(passwordCrypto !== player.password)
       return new AppError("Username ou Password estão invalidos!");
 
-    let playerReturn = this.playerToReturn(player);
+    let playerReturn = await this.playerToReturn(player);
 
-    // gerar token
-
-    return {
-      "player" : playerReturn,
-      "cookie" : "aaaaa"
-    };
+    
+    return  playerReturn ;
   }
 
   async playerToReturn(player){
