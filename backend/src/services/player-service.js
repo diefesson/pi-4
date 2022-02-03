@@ -1,6 +1,8 @@
+const bcrypt = require("bcrypt");
 const Player = require("../domain/player");
 const playerRepository = require("../repositories/player-repository");
 const AppError = require("../shared/errors/appError");
+
 
 class PlayerService {
   async add(player) {
@@ -18,11 +20,24 @@ class PlayerService {
     if(player.isAdmin === null || player.isAdmin === undefined)
       player.isAdmin = false;
 
-    return await playerRepository.save(player);
+    let hashPassword = await bcrypt.hashSync(player.password, process.env.CRYPTO_CODE);
+
+    player.password = hashPassword;
+
+    let playerSaved = await playerRepository.save(player);
+      
+    return this.playerToReturn(playerSaved);
   }
 
-  getAll() {
-    return playerRepository.findAll();
+  async getAll() {
+
+    var playerArray = await playerRepository.findAll();
+    var players = [];
+
+    for(let p of playerArray)            
+      players.push(await this.playerToReturn(p));
+    
+    return players;
   }
 
   async update(id, player) {
@@ -32,8 +47,14 @@ class PlayerService {
 
     if(result instanceof AppError)
       return result;
+    
+    let hashPassword = await bcrypt.hashSync(player.password, process.env.CRYPTO_CODE);
 
-    return playerRepository.update(id, player);
+    player.password = hashPassword;
+
+    let playerUpdated = await playerRepository.update(id, player)
+
+    return this.playerToReturn(playerUpdated) ;
   }
 
   async delete(id) {
@@ -45,6 +66,39 @@ class PlayerService {
     await playerRepository.delete(id);
     
     return {"message": "Player '"+player.username+"' foi deletado"};
+  }
+
+  async login(username, password){
+
+    let player = await playerRepository.findByUsername(username);
+
+    if(player == null)
+      return new AppError("Username ou Password estão invalidos!");
+ 
+    let passwordCrypto = await bcrypt.hashSync(password, process.env.CRYPTO_CODE); 
+ 
+    if(passwordCrypto !== player.password)
+      return new AppError("Username ou Password estão invalidos!");
+
+    let playerReturn = await this.playerToReturn(player);
+
+    
+    return  playerReturn ;
+  }
+
+  async playerToReturn(player){
+    /*
+    Tem como função mapear o registro do player armazenado no banco,
+    para um objeto sem o atributo 'password' por razões de segurança.
+    */
+
+    var result = {
+      "id": player.id,
+      "username": player.username,
+      "email": player.email      
+    };
+
+    return result;
   }
 
   async validation(player){

@@ -18,7 +18,16 @@ exports.save = async (player) => {
 };
 
 exports.findAll = async () => {
-  const result = await Player.findAll();
+  const result = await Player.findAll()
+    .then(result => {
+      let players = [];
+
+      for(let p of result)  
+        players.push(p.dataValues);
+          
+      return players;
+    });
+
   return result;
 };
 
