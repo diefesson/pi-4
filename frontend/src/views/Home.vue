@@ -3,7 +3,8 @@
     <button>Jogar</button>
     <button>Estatisticas</button>
     <button>Hall da fama</button>
-    <button @click="$router.push('/questions')">Minhas perguntas</button>
+    <button @click="$router.push('/add-question')">Adcionar pergunta</button>
+    <button @click="$router.push('/list-questions')">Minhas perguntas</button>
     <button>Sair</button>
   </div>
 </template>
@@ -31,8 +32,6 @@
 </style>
 
 <script>
-// TODO: link to other pages
-
 export default {
   name: "Home",
   components: {},
