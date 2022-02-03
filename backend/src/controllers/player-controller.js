@@ -1,3 +1,4 @@
+const cookieParser = require('cookie-parser');
 const Player = require("../domain/player.js");
 const PlayerService = require("../services/player-service.js");
 const AppError = require("../shared/errors/appError.js");
@@ -39,7 +40,26 @@ exports.login = async (req, res) => {
 
   let result = await playerService.login(username, password);
 
-  res = validation(res, result);  
+  if(result instanceof AppError){
+    res.status(result.statusCode).json({ message: result.message });
+  }
+  else{
+    res.cookie("player", result, {expire: 400000 + Date.now()});
+
+    res.status(201).json({
+      "message": `Usuário '${username}' adicionado ao cookie!`,
+      "player": result
+    }); 
+
+    
+  }
+    
+};
+
+exports.logout = (req, res)=>{
+  res.clearCookie("player");
+
+  res.send({"message": "Usuário deslogado !"});
 };
 
 async function validation(res, player){
