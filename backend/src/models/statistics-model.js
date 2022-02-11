@@ -11,6 +11,9 @@ module.exports = (sequelize, DataTypes) => {
         correctTotal: {
           type: DataTypes.INTEGER,
         },
+        round: {
+          type: DataTypes.INTEGER,
+        },
       },
       { timestamps: false }
     );
