@@ -4,7 +4,7 @@ const AppError = require("../shared/errors/appError.js");
 
 var gameService = new GameService();
 
-exports.get = async (req, res) => {
+exports.post = async (req, res) => {
 
     const {playerId, status, statisticsId } = req.body;
 
