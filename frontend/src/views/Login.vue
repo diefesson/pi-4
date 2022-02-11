@@ -11,7 +11,7 @@
         </div>
       <div class="buttonLogin">
         <div>
-          <Button label="Entrar" />
+          <Button label="Entrar" @click="created()" />
         </div>
         <div>
           <Button label="Cadastrar" @click="$router.push('/registrar')" />
@@ -58,13 +58,31 @@
 }
 </style>
 
-<script>
+<script lang="ts">
 import Button from "@/components/form/Button.vue";
+import { loginService } from "@/service/";
+import LoginEntity from "@/entity/Login";
+import { Options, Vue } from "vue-class-component";
 
-export default {
-  name: "Login",
-  components: {
+
+  @Options({
+ data: () => ({
+    user: '',
+    senha: '',
+  }),
+components: {
     Button,
   },
-};
+    created: async function () {
+      const dataLogin = new LoginEntity(this.user, this.senha)
+      // console.log(dataLogin);
+        await loginService.add(dataLogin)
+    }
+
+  
+})
+
+export default class Login extends Vue {}
+  
+  
 </script>
