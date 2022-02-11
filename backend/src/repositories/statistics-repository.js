@@ -53,3 +53,10 @@ exports.delete = async (id) => {
       },
     });
 };
+
+exports.findById = async (id) =>{
+  return await Statistics.findByPk(id)
+    .then(result => {
+      return result === null? null : result.dataValues;
+    });
+};
