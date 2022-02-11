@@ -1,8 +1,8 @@
-const START = 0; // começou a partida
-const STOP = 1; // Pediu para parar
-const ERROR = 2; // Errou alguma pergunta
-const NEXT = 4; // Proxima pergunta
-const FINISHED = 5; // Partida encerrada
+const START = "start"; // começou a partida
+const STOP = "stop"; // Pediu para parar
+const ERROR = "error"; // Errou alguma pergunta
+const NEXT = "next"; // Proxima pergunta
+const FINISHED = "finished"; // Partida encerrada
 
 module.exports = { START, STOP, ERROR, NEXT, FINISHED};
 
