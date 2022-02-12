@@ -1,3 +1,4 @@
+const { ARRAY } = require("sequelize");
 const Questions = require("../domain/questions.js");
 const QuestionsService = require("../services/questions-service.js");
 const AppError = require("../shared/errors/appError.js");
@@ -71,3 +72,11 @@ async function validation(res, question){
 
   return res;
 }
+
+exports.EliminateAnswer = async (req) => {   
+  const { questionId } = req.body;
+
+  var answers = await questionsService.alternativeEliminate(questionId);
+
+  return JSON.stringify(answers);
+};

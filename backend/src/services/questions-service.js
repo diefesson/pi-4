@@ -178,6 +178,19 @@ class QuestionsService {
 
     return {"message": `Questão de id ${id} foi removido com sucesso!`};
   }
+  async alternativeEliminate(questionId){
+
+    var answers = answersRepository.findByQuestionId(questionId);
+
+    for(let i = 0;i<answers.length;i++){
+        if(!answers[i].isCorrect){
+          delete answers[i];
+          break;
+        }
+    }
+
+    return answers;
+  }
 }
 
 module.exports = QuestionsService;
