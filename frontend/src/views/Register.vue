@@ -1,22 +1,27 @@
 <template>
   <header class="register">
-    <form @submit="$router.push('/login')">
+    <form @submit="created()">
       <div class="inputsStyles">
         <div class="inputLabel">
-          <p>Nickname:</p>
-          <input type="text" class="inputForm" v-model="nickname" />
+          <p>Username:</p>
+          <input type="text" class="inputForm" v-model="username" required />
         </div>
         <div class="inputLabel">
-          <p>Usuário:</p>
-          <input type="text" class="inputForm" v-model="user" />
+          <p>email:</p>
+          <input type="email" class="inputForm" v-model="email" required />
         </div>
         <div class="inputLabel">
           <p>Senha:</p>
-          <input type="password" class="inputForm" v-model="senha" />
+          <input type="password" class="inputForm" v-model="senha" required />
         </div>
         <div class="inputLabel">
           <p>Confirmar senha:</p>
-          <input type="password" class="inputForm" v-model="confirmarSenha" />
+          <input
+            type="password"
+            class="inputForm"
+            v-model="confirmarSenha"
+            required
+          />
         </div>
       </div>
       <div class="buttonRegister">
@@ -72,19 +77,46 @@
 
 <script>
 import Button from "@/components/form/Button.vue";
+import { cadastroService } from "@/service/";
+import CadastroEntity from "@/entity/Cadastro";
 
 export default {
   name: "Register",
   data: () => ({
-    nickname: null,
+    username: "",
+    email: "",
+    senha: "",
+    confirmarSenha: "",
   }),
   components: {
     Button,
   },
 
   methods: {
-    test: function () {
-      alert(this.nickname);
+    async created() {
+      if (this.confirmarSenha !== this.senha) {
+        alert("Os campos de senha devem ser iguais!");
+        return;
+      }
+      if (this.senha.length < 6 || this.username.length < 6) {
+        alert("Os campos de senha e username devem ter mais de 5 caracteres!");
+        return;
+      }
+      try {
+          const dataCastro = new CadastroEntity(1, this.username, this.email, this.senha);
+
+          const responseCadastro = await cadastroService.add(dataCastro);
+
+          console.log(responseCadastro);
+          // if (responseCadastro.player) {
+          //   localStorage.setItem("username", responseLogin.player.username);
+          //   localStorage.setItem("id", responseLogin.player.id.toString());
+            
+          //   router.push("/");
+          // }
+        } catch (e) {
+          alert("Usuário ou senha incorretos!");
+        }
     },
   },
 };
