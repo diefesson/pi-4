@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
       "statistics",
       {
         status: {
-          type: DataTypes.INTEGER,
+          type: DataTypes.STRING,
         },
         statusDescription: {
           type: DataTypes.STRING,

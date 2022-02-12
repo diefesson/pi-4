@@ -7,11 +7,12 @@ exports.save = async (playerId, statistics) => {
       status: statistics.status,
       statusDescription: statistics.statusDescription,
       correctTotal: statistics.correctTotal,
+      round: statistics.round,
       playerId: playerId
     })
       .then((result) => {
         console.log("Created statistic: " + JSON.stringify(result));
-        return result;
+        return result.dataValues;
       })
       .catch((err) => {
         console.log("Error: ", err);
@@ -29,6 +30,7 @@ exports.update = async (id, statistic) => {
         status: statistic.status,
         statusDescription: statistic.statusDescription,
         correctTotal: statistic.correctTotal,
+        round: statistic.round,
       },
       {
         where: {
