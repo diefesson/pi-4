@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <div class="page-content">
-      <top v-if="logado()"  />
+      <top />
       <router-view />
     </div>
   </div>

@@ -41,8 +41,8 @@
 export default {
   data: () => {
     return {
-      signed: true,
-      username: "diefesson",
+      signed: localStorage.getItem('id'),
+      username: localStorage.getItem('username'),
     };
   },
 };
