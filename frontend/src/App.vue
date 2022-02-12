@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <div class="page-content">
-      <top/>
+      <top v-if="logado()"  />
       <router-view />
     </div>
   </div>
@@ -32,7 +32,7 @@ body {
   color: #fff;
   button {
     color: black;
-  };
+  }
 }
 </style>
 
@@ -43,5 +43,14 @@ export default {
   components: {
     Top,
   },
+
+  methods: {
+    logado: function() {
+      if(localStorage.getItem('username')){
+        return true;
+      }
+      return false;
+    }
+  }
 };
 </script>

@@ -10,3 +10,11 @@ export default class Login {
       this.password = password;
     }
   }
+
+  export type LoginResponse = {
+    player: {
+      id: number,
+      username: string,
+      email: string,
+    }
+  }

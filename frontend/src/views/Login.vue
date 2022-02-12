@@ -2,16 +2,16 @@
   <header class="login">
     <div>
       <div class="inputLabel">
-          <p>Usuário:</p>
-          <input type="text" class="inputForm" v-model="user" />
-        </div>
+        <p>Usuário:</p>
+        <input type="text" class="inputForm" v-model="user" />
+      </div>
       <div class="inputLabel">
-          <p>Senha:</p>
-          <input type="password" class="inputForm" v-model="senha" />
-        </div>
+        <p>Senha:</p>
+        <input type="password" class="inputForm" v-model="senha" />
+      </div>
       <div class="buttonLogin">
         <div>
-          <Button label="Entrar" @click="created()" />
+          <Button label="Entrar" @click="() => created()" />
         </div>
         <div>
           <Button label="Cadastrar" @click="$router.push('/registrar')" />
@@ -63,26 +63,38 @@ import Button from "@/components/form/Button.vue";
 import { loginService } from "@/service/";
 import LoginEntity from "@/entity/Login";
 import { Options, Vue } from "vue-class-component";
+import router from "@/router";
 
-
-  @Options({
- data: () => ({
-    user: '',
-    senha: '',
+@Options({
+  data: () => ({
+    user: "",
+    senha: "",
   }),
-components: {
+  components: {
     Button,
   },
-    created: async function () {
-      const dataLogin = new LoginEntity(this.user, this.senha)
-      // console.log(dataLogin);
-        await loginService.add(dataLogin)
-    }
 
-  
+  methods: {
+    async created() {
+      if (this.user === "" || this.senha === "") {
+        alert("Os campos devem estar preenchidos");
+      } else {
+        try {
+          const dataLogin = new LoginEntity(this.user, this.senha);
+
+          const responseLogin = await loginService.add(dataLogin);
+          if (responseLogin.player) {
+            localStorage.setItem("username", responseLogin.player.username);
+            localStorage.setItem("id", responseLogin.player.id.toString());
+            
+            router.push("/");
+          }
+        } catch (e) {
+          alert("Usuário ou senha incorretos!");
+        }
+      }
+    },
+  },
 })
-
 export default class Login extends Vue {}
-  
-  
 </script>

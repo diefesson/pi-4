@@ -1,4 +1,4 @@
-import Login from "@/entity/Login";
+import Login, { LoginResponse } from "@/entity/Login";
 import LoginRepository from "@/repository/LoginRepository";
 
 export default class LoginService {
@@ -8,7 +8,7 @@ export default class LoginService {
     this.loginRepository = loginRepository;
   }
 
-  async add(dadosLogin: Login): Promise<Login> {
+  async add(dadosLogin: Login): Promise<LoginResponse> {
     
     return this.loginRepository.add(dadosLogin);
   }
