@@ -3,12 +3,15 @@ module.exports = (sequelize, DataTypes) => {
       "statistics",
       {
         status: {
-          type: DataTypes.INTEGER,
+          type: DataTypes.STRING,
         },
         statusDescription: {
           type: DataTypes.STRING,
         },
         correctTotal: {
+          type: DataTypes.INTEGER,
+        },
+        round: {
           type: DataTypes.INTEGER,
         },
       },

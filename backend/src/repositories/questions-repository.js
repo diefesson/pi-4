@@ -18,7 +18,15 @@ exports.save = async (question) => {
 };
 
 exports.findAll = async () => {
-    return await Questions.findAll(); 
+    return await Questions.findAll()
+      .then(result => {
+        var questions = [];
+
+        for(let q of result)  
+          questions.push(q.dataValues);
+          
+        return questions;
+      }); 
 };
 
 exports.update = async (question) => {

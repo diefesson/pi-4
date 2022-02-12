@@ -98,6 +98,29 @@ class QuestionsService {
 
   }
 
+  async getAll() {    
+
+    var result = await questionsRepository.findAll();
+   
+    if(result == null || result == undefined)
+        return new AppError("Não ha questões no banco", 404);
+
+    var questions = [];
+
+    for(var question of result){
+        question.answers = [];
+        
+        var answers = await answersRepository.findByQuestionId(question.id);
+        
+        question.answers.push(answers);
+
+        questions.push(question);
+    }
+
+    return questions;
+
+  }
+
   async validationQuestion(question){
 
     //validando campos de 'question'
