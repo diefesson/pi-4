@@ -24,14 +24,17 @@ class GameService{
 
         if(player === null)
             return new AppError("Não existe player cadastrado com o id "+player.id+" !");
+        
+        if(status == statusGame.NEXT && (statisticsId === "" || statisticsId === undefined ))
+            return new AppError("Informe o id da estatistica!");
 
-        if(statisticsId !== "" || statisticsId !== undefined){
+        if(statisticsId !== "" && statisticsId !== undefined){
             statistics = await statisticsRepository.findById(statisticsId);
 
             if(statistics === null)
                 return new AppError("Não existe estatística cadastrado com o id "+statisticsId+" !");
 
-            if(currentRound === 8 && statistics.status === statusGame.FINISHED) 
+            if(statistics.round === 7 && statistics.status === statusGame.FINISHED) 
                 return new AppError("Partida já finalizada!", 200);
 
             if(statistics.status === statusGame.FINISHED) 
@@ -46,15 +49,15 @@ class GameService{
                 break;
 
             case statusGame.NEXT:
-                result = this.next(statistics);
+                result = this.next(player, statistics);
                 break;
 
             case statusGame.STOP:
-                result = this.stop(statistics);
+                result = this.stop(player, statistics);
                 break;
 
             case statusGame.ERROR:
-                result = this.error(statistics);
+                result = this.error(player, statistics);
                 break;
 
             default:
@@ -70,18 +73,19 @@ class GameService{
 
         // verificar se existe algum registro com o status de next ?
 
-        const newStatistics = new Statistics(statusGame.START, "Game iniciado", 0, 1);
+        const newStatistics = new Statistics(statusGame.START, "Game iniciado!", 0, 1);
         const statisticsSaved = await statisticsRepository.save(player.id, newStatistics);
 
-        const question = await randomQuestion(player);
-
+        const question = await this.randomQuestion(player);
+        console.log(statisticsSaved);
         const valueHit = awards.hit[0].value;
         const valueStop = awards.stop[0].value;
         const valueWrong = awards.wrong[0].value;
 
         const result = {
-            playerId = player.id,
-            statisticsId = statisticsSaved.id,
+            playerId : player.id,
+            statisticsId : statisticsSaved.id,
+            currentRound: 1,
             question,
             award:{
                 hit: valueHit,
@@ -94,11 +98,11 @@ class GameService{
         return result;
     }
 
-    async next(statistics){
+    async next(player,statistics){
 
         let currentRound = statistics.round ;
         
-        if(currentRound === 8){
+        if(currentRound === 7){
             statistics.status = statusGame.FINISHED;
             statistics.statusDescription = `Jogador ganhou e recebeu o premio de R$ ${awards.hit[currentRound - 1].value}!`;                        
         }else{
@@ -109,17 +113,18 @@ class GameService{
 
         statistics.correctTotal = awards.hit[currentRound - 1].value; // player recebeu premio referente ao round X        
 
-        const statistics = await statisticsRepository.update(statistics.id, newStatistics);
+        const statisticsUpdate = await statisticsRepository.update(statistics.id, statistics);
         
-        const question = await randomQuestion(player);
+        const question = await this.randomQuestion();
 
         const valueHit = awards.hit[currentRound - 1].value;
         const valueStop = awards.stop[currentRound - 1].value;
         const valueWrong = awards.wrong[currentRound - 1].value;
 
         const result = {
-            playerId = player.id,
-            statisticsId = statistics.id,
+            playerId : player.id,
+            statisticsId : statistics.id,
+            currentRound: statistics.round,
             question,
             award:{
                 hit: valueHit,
@@ -132,7 +137,7 @@ class GameService{
         return result;
     }
 
-    async stop(statistics){
+    async stop(player, statistics){
 
         let currentRound = statistics.round ;
         let value = awards.stop[currentRound - 1].value;
@@ -141,19 +146,17 @@ class GameService{
         statistics.statusDescription = `Jogador decidiu parar o jogo no round ${currentRound} e recebeu o premio de R$ ${value}`;
         statistics.correctTotal = value;
 
-        const statistics = await statisticsRepository.update(statistics.id, newStatistics);
+        const statisticsUpdate = await statisticsRepository.update(statistics.id, statistics);
 
         const result = {
-            playerId = player.id,
-            statisticsId = statistics.id,
+            playerId : player.id,            
             statistics
-
         };
 
         return result;
     }
 
-    async error(statistics){
+    async error(player, statistics){
 
         let currentRound = statistics.round ;
         let value = awards.wrong[currentRound].value;
@@ -162,20 +165,24 @@ class GameService{
         statistics.statusDescription = `Jogador decidiu parar o jogo no round ${currentRound} e recebeu o premio de R$ ${value}`;
         statistics.correctTotal = value;
 
-        const statistics = await statisticsRepository.update(statistics.id, newStatistics);
+        const statisticsUpdate = await statisticsRepository.update(statistics.id, statistics);
 
         const result = {
-            playerId = player.id,
-            statisticsId = statistics.id,
+            playerId : player.id,            
             statistics
         };
 
         return result;
     }
 
-    async randomQuestion(player){
-        // como gerar uma pergunta ?
-        const question = await questionService.getById(x);
+    async randomQuestion(){
+        
+        const questions = await questionService.getAll();
+     
+        let position = Math.floor(Math.random() * (questions.length - 1 )) + 1;
+        
+        console.log("Posição que deu: "+position, "Quantidade de questões no banco: "+questions.length);
+        let question = questions[position];
 
         return question;
     }
