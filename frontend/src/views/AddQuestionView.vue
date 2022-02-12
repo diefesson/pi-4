@@ -1,6 +1,6 @@
 <template>
   <form>
-    <span>Adcionar pergunta</span>
+    <span>Adicionar pergunta</span>
     <textarea placeholder="Enunciado..."></textarea>
     <span>Alternativas:</span>
     <input class="correct" placeholder="Alternativa correta..." />
@@ -8,7 +8,7 @@
     <input class="incorrect" placeholder="Alternativa incorreta..." />
     <input class="incorrect" placeholder="Alternativa incorreta..." />
     <input class="incorrect" placeholder="Alternativa incorreta..." />
-    <button>Adcionar</button>
+    <button>Adicionar</button>
   </form>
 </template>
 

@@ -1,27 +1,35 @@
 <template>
   <header class="register">
-    <form @submit="$router.push('/login')">
+    <form>
       <div class="inputsStyles">
         <div class="inputLabel">
-          <p>Nickname:</p>
-          <input type="text" class="inputForm" v-model="nickname" />
+          <p>Username:</p>
+          <input type="text" class="inputForm" v-model="username" required />
         </div>
         <div class="inputLabel">
-          <p>Usuário:</p>
-          <input type="text" class="inputForm" v-model="user" />
+          <p>email:</p>
+          <input type="email" class="inputForm" v-model="email" required />
         </div>
         <div class="inputLabel">
           <p>Senha:</p>
-          <input type="password" class="inputForm" v-model="senha" />
+          <input type="password" class="inputForm" v-model="senha" required />
         </div>
         <div class="inputLabel">
           <p>Confirmar senha:</p>
-          <input type="password" class="inputForm" v-model="confirmarSenha" />
+          <input
+            type="password"
+            class="inputForm"
+            v-model="confirmarSenha"
+            required
+          />
         </div>
       </div>
       <div class="buttonRegister">
         <div>
-          <Button label="Criar conta" type="submit" />
+          <Button label="Criar conta" @click="() => created()" type="button" />
+        </div>
+        <div>
+          <Button label="Realizar login" @click="$router.push('/login')" />
         </div>
       </div>
     </form>
@@ -70,22 +78,57 @@
 }
 </style>
 
-<script>
+<script lang="ts">
 import Button from "@/components/form/Button.vue";
+import { cadastroService } from "@/service/";
+import CadastroEntity from "@/entity/Cadastro";
+import { Options, Vue } from "vue-class-component";
+import router from "@/router";
 
-export default {
+@Options({
   name: "Register",
   data: () => ({
-    nickname: null,
+    username: "",
+    email: "",
+    senha: "",
+    confirmarSenha: "",
   }),
   components: {
     Button,
   },
 
   methods: {
-    test: function () {
-      alert(this.nickname);
+    async created() {
+      let err = false;
+
+      if (this.confirmarSenha !== this.senha) {
+        alert("Os campos de senha devem ser iguais!");
+        err = true;
+      }
+      if (this.senha.length < 6 || this.username.length < 6) {
+        alert("Os campos de senha e username devem ter mais de 5 caracteres!");
+        err = true;
+      }
+      if (!err) {
+        try {
+          const dataCadastro = new CadastroEntity(
+            1,
+            this.username,
+            this.email,
+            this.senha
+          );
+
+          const responseCadastro = await cadastroService.add(dataCadastro);
+          if (responseCadastro) {
+            alert("Conta criada!!");
+            router.push("/login");
+          }
+        } catch (e) {
+          console.log(e);
+        }
+      }
     },
   },
-};
+})
+export default class Register extends Vue {}
 </script>
