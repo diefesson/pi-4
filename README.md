@@ -19,5 +19,13 @@ Após clonar o repositorio, siga estas instruções:
 1. Rode o comando `yarn` ou `npm install` no terminal, para baixar todas as dependências necessárias para o backend do projeto;
 2. Renomeie o arquivo `.env-example` para .env, e preencha as variáveis com a credencial do postgres, o nome do banco criado e a variável 'CRYPTO_CODE' com o code salt, que será usado para criptografar dados do player;
 3. Criei o banco de dados 'show-do-milhao' no postgres;
-4. Execute o comando `yarn start` ou `npm install`, para executar o projeto;
+4. Execute o comando `yarn start` ou `npm start`, para executar o projeto;
 5. Ao executar será criado as entidades no banco de dados automaticamente e será exibido a porta no qual esta sendo executado o projeto. Ex: http://localhost:3000 ;
+
+### Frontend
+
+1. Rode o comando `yarn` ou `npm install` no terminal, para baixar todas as dependências necessárias para o frontend do projeto;
+2. Renomeie o arquivo `.env-example` para .env, e preencha VUE_APP_BACKEND_URL com o local onde está o banco de dados;
+3. Execute o comando `yarn start` ou `npm start`, para executar o projeto;
+
+Agora basta jogar! 😁😀
