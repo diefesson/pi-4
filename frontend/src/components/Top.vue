@@ -1,7 +1,7 @@
 <template>
   <header class="top">
-    <span v-if="!signed">Criar conta</span>
-    <span v-if="signed">Sair</span>
+    <span v-if="!signed" @click="$router.push('/login')">Criar conta</span>
+    <span v-if="signed" @click="logout()">Sair</span>
     <span>|</span>
     <span v-if="!signed">Entrar</span>
     <span v-if="signed">{{ username }}</span>
@@ -24,6 +24,7 @@
 .top > span {
   font-size: 14px;
   font-family: "Roboto", sans-serif;
+  cursor: pointer;
 }
 
 .profile {
@@ -35,15 +36,21 @@
 </style>
 
 <script>
-// TODO: use data from backend
-// TODO: add actions
+import router from "@/router";
 
 export default {
   data: () => {
     return {
-      signed: localStorage.getItem('id'),
-      username: localStorage.getItem('username'),
+      signed: localStorage.getItem("id"),
+      username: localStorage.getItem("username"),
     };
+  },
+  methods: {
+    logout() {
+      localStorage.clear("id");
+      localStorage.clear("username");
+      router.push("/login");
+    },
   },
 };
 </script>

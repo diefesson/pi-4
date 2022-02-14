@@ -1,11 +1,9 @@
 <template>
   <div class="menu">
     <button>Jogar</button>
-    <button>Estatisticas</button>
-    <button>Hall da fama</button>
-    <button @click="$router.push('/add-question')">Adcionar pergunta</button>
+    <button @click="$router.push('/add-question')">Adicionar pergunta</button>
     <button @click="$router.push('/list-questions')">Minhas perguntas</button>
-    <button>Sair</button>
+    <button @click="logout()">Sair</button>
   </div>
 </template>
 
@@ -14,6 +12,7 @@
   margin: 15px;
   gap: 10px;
   display: flex;
+  margin-top: 50%;
   flex-direction: column;
   align-items: center;
 }
@@ -27,13 +26,23 @@
   background-color: white;
   font-family: "roboto", sans-serif;
   font-size: 24px;
+  cursor: pointer;
   padding: 10px;
 }
 </style>
 
 <script>
+import router from "@/router";
+
 export default {
   name: "Home",
   components: {},
+  methods: {
+    logout() {
+      localStorage.clear("id");
+      localStorage.clear("username");
+      router.push("/login");
+    },
+  }
 };
 </script>

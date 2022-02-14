@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <div class="page-content">
-      <top />
+      <!-- <top /> -->
       <router-view />
     </div>
   </div>
@@ -37,11 +37,11 @@ body {
 </style>
 
 <script>
-import Top from "@/components/Top.vue";
+// import Top from "@/components/Top.vue";
 
 export default {
   components: {
-    Top,
+    // Top,
   },
 
   methods: {
