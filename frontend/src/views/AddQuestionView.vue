@@ -1,14 +1,29 @@
 <template>
-  <form>
-    <span>Adicionar pergunta</span>
-    <textarea placeholder="Enunciado..."></textarea>
+  <form v-on:submit.prevent>
+    <span>Adcionar pergunta</span>
+    <textarea placeholder="Enunciado..." v-model="utterance"></textarea>
     <span>Alternativas:</span>
-    <input class="correct" placeholder="Alternativa correta..." />
-    <input class="incorrect" placeholder="Alternativa incorreta..." />
-    <input class="incorrect" placeholder="Alternativa incorreta..." />
-    <input class="incorrect" placeholder="Alternativa incorreta..." />
-    <input class="incorrect" placeholder="Alternativa incorreta..." />
-    <button>Adicionar</button>
+    <input
+      class="correct"
+      placeholder="Alternativa correta..."
+      v-model="answers[0]"
+    />
+    <input
+      class="incorrect"
+      placeholder="Alternativa incorreta..."
+      v-model="answers[1]"
+    />
+    <input
+      class="incorrect"
+      placeholder="Alternativa incorreta..."
+      v-model="answers[2]"
+    />
+    <input
+      class="incorrect"
+      placeholder="Alternativa incorreta..."
+      v-model="answers[3]"
+    />
+    <button type="button" v-on:click="onAddButton">Adcionar</button>
   </form>
 </template>
 
@@ -60,13 +75,40 @@ button {
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
+import { authService, questionService } from "@/service";
+import Question from "@/entity/Question";
+import Answer from "@/entity/Answer";
+import Incorreta from "./Incorreta.vue";
 
 @Options({
+  components: { Incorreta },
   data: () => ({
     utterance: "",
-    answers: ["", "", "", "", ""],
+    answers: ["", "", "", ""],
   }),
   props: ["id"],
+  methods: {
+    collectQuestion(): Question {
+      const answers: Answer[] = this.answers.map(
+        (description: string) => new Answer(description, false)
+      );
+      answers[0].isCorrect = true;
+      return new Question(
+        authService.getId() as number,
+        this.utterance,
+        answers
+      );
+    },
+    async onAddButton() {
+      try {
+        const question = this.collectQuestion();
+        const result = await questionService.add(question);
+        console.log(result);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+  },
 })
 export default class AddQuestionView extends Vue {}
 </script>

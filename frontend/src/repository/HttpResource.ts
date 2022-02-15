@@ -15,31 +15,31 @@ class HttpResource {
 
   async post(data: any, params = {}): Promise<any> {
     return axios
-      .post(this.url, data, { ...this.config, ...params })
+      .post(this.url, data, { ...this.config, params })
       .then((response) => response.data);
   }
 
   async put(id: number, data: any, params = {}): Promise<any> {
     return axios
-      .put(this.url + "/" + id, data, { ...this.config, ...params })
+      .put(this.url + "/" + id, data, { ...this.config, params })
       .then((response) => response.data);
   }
 
   async getById(id: number, params = {}): Promise<any> {
     return axios
-      .get(this.url + "/" + id, { ...this.config, ...params })
+      .get(this.url + "/" + id, { ...this.config, params })
       .then((response) => response.data);
   }
 
   async get(params = {}): Promise<any> {
     return axios
-      .get(this.url, { ...this.config, ...params })
+      .get(this.url, { ...this.config, params })
       .then((response) => response.data);
   }
 
-  async delete(id: number, params = {}): Promise<void> {
+  async delete(id: number, params = {}): Promise<any> {
     return axios
-      .delete(this.url + "/" + id, { ...this.config, ...params })
+      .delete(this.url + "/" + id, { ...this.config, params })
       .then((response) => response.data);
   }
 }
