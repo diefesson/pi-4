@@ -13,7 +13,7 @@ import { Options, Vue } from "vue-class-component";
   }),
   components: { QuestionList },
   async created() {
-    this.questions = await questionService.findByPlayerId(0); // TODO: remove hardcoded player id
+    this.questions = await questionService.findByPlayerId(parseFloat(localStorage.getItem('id') || '')); 
   },
 })
 export default class Questions extends Vue {}

@@ -1,6 +1,6 @@
 <template>
   <div class="menu">
-    <button>Jogar</button>
+    <button @click="$router.push('/jogo')">Jogar</button>
     <button @click="$router.push('/add-question')">Adicionar pergunta</button>
     <button @click="$router.push('/list-questions')">Minhas perguntas</button>
     <button @click="logout()">Sair</button>

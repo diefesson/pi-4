@@ -1,6 +1,6 @@
 <template>
   <span>Adicionar pergunta</span>
-  <form>
+  <div class="questoes">
     <textarea placeholder="Enunciado..." v-model="utterance"></textarea>
     <span>Alternativas:</span>
     <input
@@ -23,19 +23,14 @@
       placeholder="Alternativa incorreta..."
       v-model="answers[3]"
     />
-    <input
-      class="incorrect"
-      placeholder="Alternativa incorreta..."
-      v-model="answers[4]"
-    />
-    <button type="button" @click="created()">Adicionar</button>
+    <Button class="botao" label="Adicionar" @click="created()" />
     <br />
-    <button type="button" @click="$router.push('/')">Voltar</button>
-  </form>
+    <Button class="botao" label="Voltar" @click="$router.push('/')" />
+  </div>
 </template>
 
 <style scoped>
-form {
+.questoes {
   padding: 15px;
   width: 100%;
   box-sizing: border-box;
@@ -70,19 +65,8 @@ textarea {
   border: 2px solid #741e1e;
 }
 
-button {
+.botao {
   align-self: center;
-  font-family: "roboto";
-  width: 50%;
-  flex: 1 1 0px;
-  border-color: silver;
-  border-width: 1px;
-  border-radius: 10px;
-  background-color: white;
-  font-family: "roboto", sans-serif;
-  font-size: 18px;
-  cursor: pointer;
-  padding: 10px;
 }
 </style>
 
@@ -92,6 +76,8 @@ import QuestionEntity from "@/entity/Question";
 import AnswerEntity from "@/entity/Answer";
 import { questionService } from "@/service/";
 import Answer from "@/entity/Answer";
+import Button from "@/components/form/Button.vue";
+import router from "@/router";
 
 @Options({
   data: () => ({
@@ -99,6 +85,9 @@ import Answer from "@/entity/Answer";
     answers: ["", "", "", "", ""],
   }),
   props: ["id"],
+  components: {
+    Button,
+  },
 
   methods: {
     async created() {
@@ -108,7 +97,6 @@ import Answer from "@/entity/Answer";
           new AnswerEntity(this.answers[1], false),
           new AnswerEntity(this.answers[2], false),
           new AnswerEntity(this.answers[3], false),
-          new AnswerEntity(this.answers[5], false),
         ];
 
         const data = new QuestionEntity(
@@ -120,8 +108,10 @@ import Answer from "@/entity/Answer";
         const response = await questionService.add(data);
 
         console.log(response);
+        alert("Pergunta cadastrada com sucesso!");
+        router.push("/");
       } catch (e) {
-        alert("Usuário ou senha incorretos!");
+        alert("Erro!");
       }
     },
   },
