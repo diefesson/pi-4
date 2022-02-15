@@ -60,8 +60,7 @@
 
 <script lang="ts">
 import Button from "@/components/form/Button.vue";
-import { loginService } from "@/service/";
-import LoginEntity from "@/entity/Login";
+import { authService } from "@/service/";
 import { Options, Vue } from "vue-class-component";
 import router from "@/router";
 
@@ -73,23 +72,17 @@ import router from "@/router";
   components: {
     Button,
   },
-
   methods: {
     async created() {
       if (this.user === "" || this.senha === "") {
         alert("Os campos devem estar preenchidos");
       } else {
         try {
-          const dataLogin = new LoginEntity(this.user, this.senha);
-
-          const responseLogin = await loginService.add(dataLogin);
-          if (responseLogin.player) {
-            localStorage.setItem("username", responseLogin.player.username);
-            localStorage.setItem("id", responseLogin.player.id.toString());
-            
-            router.push("/");
-          }
-        } catch (e) {
+          await authService.login(this.user, this.senha);
+          await router.push("/");
+          router.go(0);
+        } catch (error) {
+          console.error(error);
           alert("Usuário ou senha incorretos!");
         }
       }

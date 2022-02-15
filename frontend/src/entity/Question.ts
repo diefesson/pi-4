@@ -1,20 +1,20 @@
 import Answer from "./Answer";
 
 export default class Question {
-  id: number;
   createdPlayerId: number;
   utterance: string;
   answers: Answer[];
+  id?: number;
 
   constructor(
-    id: number,
     createdPlayerId: number,
     utterance: string,
-    answers: Answer[]
+    answers: Answer[],
+    id?: number
   ) {
-    this.id = id;
     this.createdPlayerId = createdPlayerId;
     this.utterance = utterance;
     this.answers = answers;
+    this.id = id;
   }
 }

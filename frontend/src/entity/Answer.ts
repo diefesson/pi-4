@@ -1,18 +1,18 @@
 export default class Answer {
-  id: number;
-  questionId: number;
   description: string;
   isCorrect: boolean;
+  id?: number;
+  questionId?: number;
 
   constructor(
-    id: number,
-    questionId: number,
     description: string,
-    isCorrect: boolean
+    isCorrect: boolean,
+    id?: number,
+    questionId?: number
   ) {
-    this.id = id;
-    this.questionId = questionId;
     this.description = description;
     this.isCorrect = isCorrect;
+    this.id = id;
+    this.questionId = questionId;
   }
 }

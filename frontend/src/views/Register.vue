@@ -1,6 +1,6 @@
 <template>
   <header class="register">
-    <form>
+    <form v-on:submit.prevent>
       <div class="inputsStyles">
         <div class="inputLabel">
           <p>Username:</p>
@@ -25,12 +25,8 @@
         </div>
       </div>
       <div class="buttonRegister">
-        <div>
-          <Button label="Criar conta" @click="() => created()" type="button" />
-        </div>
-        <div>
-          <Button label="Realizar login" @click="$router.push('/login')" />
-        </div>
+        <Button label="Criar conta" v-on:click="onCreateClick" type="button" />
+        <Button label="Realizar login" v-on:click="onLoginClick"></Button>
       </div>
     </form>
   </header>
@@ -98,18 +94,20 @@ import router from "@/router";
   },
 
   methods: {
-    async created() {
-      let err = false;
-
+    verifyFields() {
+      let success = true;
       if (this.confirmarSenha !== this.senha) {
         alert("Os campos de senha devem ser iguais!");
-        err = true;
+        success = false;
       }
       if (this.senha.length < 6 || this.username.length < 6) {
         alert("Os campos de senha e username devem ter mais de 5 caracteres!");
-        err = true;
+        success = false;
       }
-      if (!err) {
+      return success;
+    },
+    async onCreateClick() {
+      if (this.verifyFields()) {
         try {
           const dataCadastro = new CadastroEntity(
             1,
@@ -117,16 +115,18 @@ import router from "@/router";
             this.email,
             this.senha
           );
-
           const responseCadastro = await cadastroService.add(dataCadastro);
           if (responseCadastro) {
             alert("Conta criada!!");
             router.push("/login");
           }
-        } catch (e) {
-          console.log(e);
+        } catch (error) {
+          console.error(error);
         }
       }
+    },
+    async onLoginClick() {
+      router.push("/login");
     },
   },
 })

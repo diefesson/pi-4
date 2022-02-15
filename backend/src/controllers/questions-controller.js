@@ -17,7 +17,7 @@ exports.post = async (req, res) => {
 };
 
 exports.getByPlayerId = async (req, res) => {
-  const {playerId} = req.body;
+  const {playerId} = req.query;
 
   var questions = await questionsService.getByPlayerId(playerId);
 
