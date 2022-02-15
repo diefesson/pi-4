@@ -56,11 +56,11 @@ textarea {
 }
 
 .correct {
-  border: 2px solid #008435;
+  border: 3px solid #008435;
 }
 
 .incorrect {
-  border: 2px solid #741e1e;
+  border: 3px solid #a81414;
 }
 
 button {
