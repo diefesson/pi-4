@@ -73,10 +73,12 @@ async function validation(res, question){
   return res;
 }
 
-exports.EliminateAnswer = async (req) => {   
-  const { questionId } = req.body;
+exports.EliminateAnswer = async (req, res) => {   
+  const { id } = req.params;
 
-  var answers = await questionsService.alternativeEliminate(questionId);
+  var answers = await questionsService.eliminateAnswers(id);
 
-  return JSON.stringify(answers);
+  res.status(201).json(answers);
+
+  return res;
 };
