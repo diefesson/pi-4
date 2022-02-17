@@ -2,11 +2,11 @@ import { createRouter, createWebHistory } from "vue-router";
 import Home from "@/views/Home.vue";
 import Login from "@/views/Login.vue";
 import Register from "@/views/Register.vue";
-import Correta from "@/views/Correta.vue";
-import Incorreta from "@/views/Incorreta.vue";
-import ListQuestions from "@/views/ListQuestionsView.vue";
-import AddQuestion from "@/views/AddQuestionView.vue";
-import Jogo from "@/views/Jogo.vue";
+import PauseStatus from "@/views/PauseView.vue";
+import PauseView from "@/views/PauseView.vue";
+import ListQuestionsView from "@/views/ListQuestionsView.vue";
+import AddQuestionView from "@/views/AddQuestionView.vue";
+import Game from "@/views/GameView.vue";
 
 const routes = [
   {
@@ -17,12 +17,12 @@ const routes = [
   {
     path: "/list-questions",
     name: "List questions",
-    component: ListQuestions,
+    component: ListQuestionsView,
   },
   {
     path: "/add-question",
     name: "Add question",
-    component: AddQuestion,
+    component: AddQuestionView,
   },
   {
     path: "/login",
@@ -35,19 +35,27 @@ const routes = [
     component: Register,
   },
   {
-    path: "/correto",
-    name: "Correta",
-    component: Correta,
+    path: "/pause/:pauseStatus",
+    name: "Correct",
+    component: PauseView,
+    props: true,
   },
   {
-    path: "/incorreto",
-    name: "Incorreta",
-    component: Incorreta,
+    path: "/pause/:pauseStatus",
+    name: "Incorrect",
+    component: PauseView,
+    props: true,
   },
   {
-    path: "/jogo",
-    name: "Jogo",
-    component: Jogo,
+    path: "/pause/:pauseStatus",
+    name: "stop",
+    component: PauseView,
+    props: true,
+  },
+  {
+    path: "/game",
+    name: "game",
+    component: Game,
   },
   {
     path: "/:pathMatch(.*)*",

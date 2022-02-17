@@ -108,12 +108,7 @@ class QuestionsService {
     var questions = [];
 
     for(var question of result){
-        question.answers = [];
-        
-        var answers = await answersRepository.findByQuestionId(question.id);
-        
-        question.answers.push(answers);
-
+        question.answers = await answersRepository.findByQuestionId(question.id);
         questions.push(question);
     }
 

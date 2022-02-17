@@ -179,7 +179,7 @@ class GameService{
         
         const questions = await questionService.getAll();
      
-        let position = Math.floor(Math.random() * (questions.length - 1 )) + 1;
+        let position = Math.floor(Math.random() * questions.length);
         
         console.log("Posição que deu: "+position, "Quantidade de questões no banco: "+questions.length);
         let question = questions[position];

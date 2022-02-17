@@ -1,10 +1,13 @@
 <template>
   <div class="menu">
-    <button @click="$router.push('/jogo')">Jogar</button>
-    <button >Estatísticas</button>
-    <button @click="$router.push('/add-question')">Adicionar pergunta</button>
-    <button @click="$router.push('/list-questions')">Minhas perguntas</button>
-    <button @click="logout()">Sair</button>
+    <button v-on:click="$router.push('/game')">Jogar</button>
+    <button>Estatisticas</button>
+    <button v-on:click="$router.push('/add-question')">
+      Adcionar pergunta
+    </button>
+    <button v-on:click="$router.push('/list-questions')">
+      Minhas perguntas
+    </button>
   </div>
 </template>
 
@@ -33,6 +36,6 @@
 <script>
 export default {
   name: "Home",
-  components: {   },
+  components: {},
 };
 </script>

@@ -23,8 +23,7 @@ export default class AuthRepository {
   }
 
   logout(): void {
-    localStorage.removeItem(KEY_ID);
-    localStorage.removeItem(KEY_USERNAME);
+    localStorage.clear();
   }
 
   getId(): number | null {
