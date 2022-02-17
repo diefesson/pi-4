@@ -9,7 +9,9 @@ project for the discipline of Integrative Project 4
 - [Esteira de desenvolvimento no Trello;](https://trello.com/b/ikcgNWg8/pi4)
 - [Instruções para consumir a API desenvolvida;](https://watery-blanket-6fc.notion.site/Show-do-milh-o-Requisi-es-b235b64f21fb40ea9bf42362fbf92532)
 - [Diagrama caso de uso](https://whimsical.com/pi-4-show-do-milhao-KPJB4nRE19DYFiXMrf2zFi)
-- [Relacionamento das tabelas ;](https://dbdiagram.io/d/6189348b02cf5d186b4b7a7b)
+- [Relacionamento das tabelas;](https://dbdiagram.io/d/6189348b02cf5d186b4b7a7b)
+- [Descrição do modelo arquitetural;](https://docs.google.com/document/d/1269KoNAmZbArcHmDyWCWO15gRjtHHvhd/edit?usp=sharing&ouid=111183877853335339722&rtpof=true&sd=true)
+- [Documento para casos de testes;](https://docs.google.com/spreadsheets/d/1SeJcq9pJr4cdDH8gCl9uHrKXfN-Z4W07/edit?usp=sharing&ouid=111183877853335339722&rtpof=true&sd=true)
 
 ## Instruções
 ### Backend
