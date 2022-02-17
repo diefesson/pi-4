@@ -24,14 +24,8 @@
       v-model="answers[3]"
     />
     <div class="botoes-container">
-      <br>
-      <div>
-        <Button class="botao" label="Adicionar" @click="onAddButton" />
-      </div>
-      <br> 
-      <div>
-        <Button class="botao" label="Voltar" @click="$router.push('/')" />
-      </div>
+      <Button class="botao" label="Voltar" @click="$router.push('/')" />
+      <Button class="botao" label="Adicionar" @click="onAddButton" />
     </div>
   </form>
 </template>
@@ -65,8 +59,9 @@ textarea {
 }
 
 .botoes-container {
-  align-self: center;
-  margin-bottom: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
 }
 
 .correct {
@@ -117,8 +112,8 @@ import Button from "@/components/form/Button.vue";
     async onAddButton() {
       try {
         const question = this.collectQuestion();
-        const result = await questionService.add(question);
-        console.log(result);
+        await questionService.add(question);
+        this.$router.push("/");
       } catch (error) {
         console.error(error);
       }
