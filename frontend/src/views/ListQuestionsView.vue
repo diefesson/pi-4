@@ -71,5 +71,5 @@ import { Options, Vue } from "vue-class-component";
     }, */
   },
 })
-export default class Questions extends Vue {}
+export default class ListQuestionsView extends Vue {}
 </script>

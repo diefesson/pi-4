@@ -1,55 +1,39 @@
-import GameCommand, { GameStatus } from "@/entity/GameCommand";
 import AuthRepository from "@/repository/AuthRepository";
 import GameRepository from "@/repository/GameRepository";
+
+const KEY_STATISTICS_ID = "statisticsId";
+const KEY_PRIZE = "prize";
 
 export default class GameService {
   gameRepository: GameRepository;
   authRepository: AuthRepository;
-  statisticsId?: number;
 
   constructor(gameRepository: GameRepository, authRepository: AuthRepository) {
     this.gameRepository = gameRepository;
     this.authRepository = authRepository;
   }
 
-  async startGame(): Promise<any> {
-    const command = new GameCommand(
-      this.authRepository.getId()!,
-      GameStatus.START
-    );
-    const result = await this.gameRepository.sendCommand(command);
-    this.statisticsId = result.statisticsId;
-    return result;
+  async startGame() {
+    return this.gameRepository.startGame(this.authRepository.getId()!);
   }
 
-  async next(): Promise<any> {
-    const command = new GameCommand(
-      this.authRepository.getId()!,
-      GameStatus.NEXT,
-      this.statisticsId!
-    );
-    return this.gameRepository.sendCommand(command);
+  async next() {
+    return this.gameRepository.next(this.authRepository.getId()!);
   }
 
-  async error(): Promise<any> {
-    const command = new GameCommand(
-      this.authRepository.getId()!,
-      GameStatus.ERROR,
-      this.statisticsId!
-    );
-    const result = await this.gameRepository.sendCommand(command);
-    this.statisticsId = undefined;
-    return result;
+  async error() {
+    return this.gameRepository.error(this.authRepository.getId()!);
   }
 
-  async stopGame(): Promise<any> {
-    const command = new GameCommand(
-      this.authRepository.getId()!,
-      GameStatus.STOP,
-      this.statisticsId!
-    );
-    const result = await this.gameRepository.sendCommand(command);
-    this.statisticsId = undefined;
-    return result;
+  async stopGame() {
+    return this.gameRepository.stopGame(this.authRepository.getId()!);
+  }
+
+  isPlaying(): boolean {
+    return this.gameRepository.isPlaying();
+  }
+
+  getGame(): any {
+    return this.gameRepository.getGame();
   }
 }

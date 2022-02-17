@@ -2,7 +2,7 @@
   <div class="page">
     <div class="page-content">
       <top />
-      <router-view />
+      <router-view v-bind:key="$route.fullPath" />
     </div>
   </div>
 </template>
@@ -45,12 +45,12 @@ export default {
   },
 
   methods: {
-    logado: function() {
-      if(localStorage.getItem('username')){
+    logado: function () {
+      if (localStorage.getItem("username")) {
         return true;
       }
       return false;
-    }
-  }
+    },
+  },
 };
 </script>
