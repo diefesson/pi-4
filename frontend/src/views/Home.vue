@@ -1,23 +1,22 @@
 <template>
   <div class="menu">
-    <button>Jogar</button>
-    <button>Estatisticas</button>
-    <button>Hall da fama</button>
-    <button @click="$router.push('/add-question')">Adcionar pergunta</button>
+    <button @click="$router.push('/jogo')">Jogar</button>
+    <button >Estatísticas</button>
+    <button @click="$router.push('/add-question')">Adicionar pergunta</button>
     <button @click="$router.push('/list-questions')">Minhas perguntas</button>
-    <button>Sair</button>
+    <button @click="logout()">Sair</button>
   </div>
 </template>
 
 <style scoped>
 .menu {
   margin: 15px;
-  gap: 10px;
+  gap: 20px;
   display: flex;
+  margin-top: 30%;
   flex-direction: column;
   align-items: center;
 }
-
 .menu > button {
   width: 100%;
   flex: 1 1 0px;
@@ -27,13 +26,13 @@
   background-color: white;
   font-family: "roboto", sans-serif;
   font-size: 24px;
+  cursor: pointer;
   padding: 10px;
 }
 </style>
-
 <script>
 export default {
   name: "Home",
-  components: {},
+  components: {   },
 };
 </script>
