@@ -1,17 +1,23 @@
 <template>
   <header class="top">
     <div class="home">
-      <span v-on:click="onHomeClick">Home</span>
+      <span v-on:click="onHomeClick" class="clicavel">Home</span>
     </div>
     <div class="auth-options">
-      <span v-if="!authenticated" v-on:click="onRegisterClick">
+      <span v-if="!authenticated" class="clicavel" v-on:click="onRegisterClick">
         Criar conta
       </span>
-      <span v-if="authenticated" v-on:click="onLogoutClick"> Sair </span>
+      <span v-if="authenticated" class="clicavel" v-on:click="onLogoutClick">
+        Sair
+      </span>
       <span>|</span>
-      <span v-if="!authenticated" v-on:click="onLoginClick">Entrar</span>
+      <span v-if="!authenticated" class="clicavel" v-on:click="onLoginClick"
+        >Entrar</span
+      >
       <span v-if="authenticated">{{ username }}</span>
-      <div class="profile"></div>
+      <div class="profile">
+        <img src="https://img.icons8.com/ios/344/user-male--v1.png" alt="ola" />
+      </div>
     </div>
   </header>
 </template>
@@ -49,7 +55,17 @@
   width: 30px;
   height: 30px;
   border-radius: 100%;
-  background-color: darkgray;
+  background-color: #F4F4F4;
+  margin-left: 10px;
+}
+img {
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+}
+
+.clicavel {
+  cursor: pointer;
 }
 </style>
 

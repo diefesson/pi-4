@@ -49,7 +49,7 @@ const routes = [
   {
     path: "/pause/:pauseStatus",
     name: "stop",
-    components: PauseView,
+    component: PauseView,
     props: true,
   },
   {

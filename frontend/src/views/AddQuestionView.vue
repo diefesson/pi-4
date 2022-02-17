@@ -23,7 +23,16 @@
       placeholder="Alternativa incorreta..."
       v-model="answers[3]"
     />
-    <button type="button" v-on:click="onAddButton">Adcionar</button>
+    <div class="botoes-container">
+      <br>
+      <div>
+        <Button class="botao" label="Adicionar" @click="onAddButton" />
+      </div>
+      <br> 
+      <div>
+        <Button class="botao" label="Voltar" @click="$router.push('/')" />
+      </div>
+    </div>
   </form>
 </template>
 
@@ -55,6 +64,11 @@ textarea {
   height: 5em;
 }
 
+.botoes-container {
+  align-self: center;
+  margin-bottom: 50px;
+}
+
 .correct {
   border: 3px solid #008435;
 }
@@ -79,9 +93,10 @@ import { authService, questionService } from "@/service";
 import Question from "@/entity/Question";
 import Answer from "@/entity/Answer";
 import Incorreta from "./Incorreta.vue";
+import Button from "@/components/form/Button.vue";
 
 @Options({
-  components: { Incorreta },
+  components: { Incorreta, Button },
   data: () => ({
     utterance: "",
     answers: ["", "", "", ""],

@@ -8,7 +8,7 @@
 .buttonForm {
   all: unset;
   border-radius: 5px;
-  min-width: 120px;
+  min-width: 150px;
   text-align: center;
   padding: 15px 30px 15px 30px;
   background: #fff;
