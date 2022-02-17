@@ -2,6 +2,7 @@ import HttpResource from "./HttpResource";
 
 const KEY_ID = "id";
 const KEY_USERNAME = "username";
+const KEY_PLAYER = "player";
 
 export default class AuthRepository {
   loginResource: HttpResource;
@@ -25,6 +26,7 @@ export default class AuthRepository {
   logout(): void {
     localStorage.removeItem(KEY_ID);
     localStorage.removeItem(KEY_USERNAME);
+    sessionStorage.removeItem(KEY_PLAYER);
   }
 
   getId(): number | null {

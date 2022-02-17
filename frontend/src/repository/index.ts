@@ -3,11 +3,12 @@ import LoginRepository from "./LoginRepository";
 import CadastroRepository from "./CadastroRepository";
 import AuthRepository from "./AuthRepository";
 import JogoRepository from "./JogoRepository";
+import GameRepository from "./GameRepository";
+import { BACKEND_URL } from "@/env";
 
-const backend_url = process.env.VUE_APP_BACKEND_URL;
-
-export const questionRepository = new QuestionRepository(backend_url);
-export const loginRepository = new LoginRepository(backend_url);
-export const cadastroRepository = new CadastroRepository(backend_url);
-export const authRepository = new AuthRepository(backend_url);
-export const jogoRepository = new JogoRepository(backend_url);
+export const questionRepository = new QuestionRepository(BACKEND_URL);
+export const loginRepository = new LoginRepository(BACKEND_URL);
+export const cadastroRepository = new CadastroRepository(BACKEND_URL);
+export const authRepository = new AuthRepository(BACKEND_URL);
+export const jogoRepository = new JogoRepository(BACKEND_URL);
+export const gameRepository = new GameRepository(BACKEND_URL);
