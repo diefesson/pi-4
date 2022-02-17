@@ -1,10 +1,14 @@
 <template>
   <div class="menu">
-    <button>Jogar</button>
+    <button v-on:click="$router.push('/game')">Jogar</button>
     <button>Estatisticas</button>
     <button>Hall da fama</button>
-    <button @click="$router.push('/add-question')">Adcionar pergunta</button>
-    <button @click="$router.push('/list-questions')">Minhas perguntas</button>
+    <button v-on:click="$router.push('/add-question')">
+      Adcionar pergunta
+    </button>
+    <button v-on:click="$router.push('/list-questions')">
+      Minhas perguntas
+    </button>
     <button>Sair</button>
   </div>
 </template>

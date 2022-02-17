@@ -6,7 +6,7 @@ import Correta from "@/views/Correta.vue";
 import Incorreta from "@/views/Incorreta.vue";
 import ListQuestions from "@/views/ListQuestionsView.vue";
 import AddQuestion from "@/views/AddQuestionView.vue";
-import Jogo from "@/views/Jogo.vue";
+import Game from "@/views/Game.vue";
 
 const routes = [
   {
@@ -45,9 +45,9 @@ const routes = [
     component: Incorreta,
   },
   {
-    path: "/jogo",
-    name: "Jogo",
-    component: Jogo,
+    path: "/game",
+    name: "game",
+    component: Game,
   },
   {
     path: "/:pathMatch(.*)*",
