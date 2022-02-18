@@ -29,6 +29,10 @@ export default class GameService {
     return this.gameRepository.stopGame(this.authRepository.getId()!);
   }
 
+  finalize() {
+    this.gameRepository.finalize();
+  }
+
   isPlaying(): boolean {
     return this.gameRepository.isPlaying();
   }

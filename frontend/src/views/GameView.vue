@@ -138,8 +138,10 @@ const LAST_ROUND = 7;
         }
         const answer = this.answers[selectedIndex];
         if (answer.isCorrect) {
+          const wasLast = gameService.getGame().currentRound == LAST_ROUND;
           await gameService.next();
-          if (gameService.getGame().currentRound == LAST_ROUND) {
+          if (wasLast) {
+            gameService.finalize();
             this.$router.push("/pause/victory");
           } else {
             this.$router.push("/pause/correct");

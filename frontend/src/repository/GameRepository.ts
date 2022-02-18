@@ -45,6 +45,10 @@ export default class GameRepository {
     return result;
   }
 
+  finalize() {
+    this.setPlaying(false);
+  }
+
   setPlaying(playing: boolean) {
     const json = JSON.stringify(playing);
     localStorage.setItem(KEY_PLAYING, playing.toString());
